@@ -1,0 +1,55 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ps-app-frontend-ingress
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web, websecure 
+spec:
+  ingressClassName: traefik
+  rules:
+  # add "127.0.0.1 ps-app-frontend.rancher.local" line into /etc/hosts file in local environment
+  - host: ps-app-frontend.rancher.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ps-app-frontend-service
+            port:
+              number: 8080  
+      - path: /login
+        pathType: Prefix
+        backend:
+          service:
+            name: ps-bff-service
+            port:
+              number: 8080       
+      - path: /logout
+        pathType: Prefix
+        backend:
+          service:
+            name: ps-bff-service
+            port:
+              number: 8080
+      - path: /profile
+        pathType: Prefix
+        backend:
+          service:
+            name: ps-bff-service
+            port:
+              number: 8080
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: ps-bff-service
+            port:
+              number: 8080              
+      - path: /oauth2
+        pathType: Prefix
+        backend:
+          service:
+            name: ps-bff-service
+            port:
+              number: 8080 

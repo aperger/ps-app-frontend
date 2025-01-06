@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.azure.com/tls-cert-keyvault-uri: https://kvpsdomain.vault.azure.net/certificates/wildcardcert
+  name: ps-app-frontend-ingress
+  namespace: default
+spec:
+  ingressClassName: webapprouting.kubernetes.azure.com
+  rules:
+    - host: ps-app-frontend.azure.pergersoft.hu
+      http:
+        paths:
+          - backend:
+              service:
+                name: ps-app-frontend-service
+                port:
+                  number: 8080
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - ps-app-frontend.azure.pergersoft.hu
+      secretName: keyvault-ps-app-frontend-ingress

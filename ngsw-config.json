@@ -1,0 +1,73 @@
+{
+  "$schema": "./node_modules/@angular/service-worker/config/schema.json",
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "resources": {
+        "files": [
+          "/favicon.ico",
+          "/index.html",
+          "/manifest.webmanifest",
+          "/*.css",
+          "/*.js"
+        ]
+      }
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/assets/**",
+          "/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"
+        ]
+      }
+    }
+  ],
+  "navigationUrls": [
+    "/**",
+    "!/login",
+    "!/**/login/**",
+    "!/**/login",
+    "!/logout",
+    "!/**/logout",
+    "!/profile/**",
+    "!/oauth2/authorization/**",
+    "!/**/*.*",
+    "!/**/*__*",
+    "!/**/*__*/**"
+  ],
+  "navigationRequestStrategy": "performance",
+  "dataGroups": [
+    {
+      "name": "ajax-ps-servlet-api",
+      "urls": ["https://ps-servlet-api.azurewebsites.net/api/**"],
+      "cacheConfig": {
+        "strategy": "performance",
+        "maxSize": 100,
+        "maxAge": "1m"
+      }
+    },
+    {
+      "name": "ajax-ps-reactive-api",
+      "urls": ["https://ps-reactive-api.azurewebsites.net/api/**"],
+      "cacheConfig": {
+        "strategy": "performance",
+        "maxSize": 100,
+        "maxAge": "2m"
+      }
+    },
+    {
+      "name": "api-freshness",
+      "urls": ["/api/**"],
+      "cacheConfig": {
+        "strategy": "performance",
+        "maxSize": 100,
+        "maxAge": "3m"
+      }
+    }
+  ]
+}

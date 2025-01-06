@@ -1,0 +1,66 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false">
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+      <div mat-subheader><h4>Servlet API calls</h4></div>
+      <a mat-list-item (click)="onClickWelcomeAjax1()">Welcome with AJAX</a>
+      <a mat-list-item (click)="onClickWelcomeProxy1()">Welcome with PROXY</a>
+      <mat-divider></mat-divider>
+      <div mat-subheader><h4>Reactive API calls</h4></div>
+      <a mat-list-item (click)="onClickWelcomeAjax2()">Welcome with AJAX</a>
+      <a mat-list-item (click)="onClickWelcomeProxy2()">Welcome with PROXY</a>
+      <mat-divider></mat-divider>
+      <a mat-list-item href="logout">Logout</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span> {{ 'Template PWA - Welcome ' + (userService.profile$ | async)?.fullName }}</span>
+    </mat-toolbar>
+    <!-- Add Content Here -->
+
+    <mat-card style="margin: 50px;">
+      <mat-card-content>
+          <mat-list>
+              <mat-list-item>
+                <span matListItemTitle>Message from resource server:</span>
+                <span matListItemLine> {{ message }}</span>
+              </mat-list-item>
+            </mat-list>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card style="margin: 50px;">
+      <mat-card-content>
+          <mat-list>
+              <mat-list-item>
+                <span matListItemTitle>Username:</span>
+                <span matListItemLine> {{ (userService.profile$ | async)?.username }}</span>
+              </mat-list-item>
+              <mat-list-item>
+                  <span matListItemTitle>Access Token: </span>
+                  <span matListItemLine> {{ (userService.getUserToken() | async)?.accessToken }}</span>
+              </mat-list-item>
+              <mat-list-item>
+                <span matListItemTitle>Expires at: </span>
+                <span matListItemLine> {{ (userService.getUserToken() | async)?.tokenExpires?.toISOString() }}</span>
+              </mat-list-item>
+            </mat-list>
+      </mat-card-content>
+    </mat-card>
+
+
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

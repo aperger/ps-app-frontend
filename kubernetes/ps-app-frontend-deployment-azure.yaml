@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: ps-app-frontend-deployment
+  labels:
+      app: ps-app-frontend
+      type: front-end
+
+spec:
+  selector:
+    matchLabels:
+      app: ps-app-frontend
+      type: front-end
+  template:
+    metadata:
+     name: ps-app-frontend-pod
+     labels:
+        app: ps-app-frontend
+        type: front-end
+    spec:
+      containers:
+      - name: ps-app-frontend
+        image: acrpegersoft.azurecr.io/ps-keycloak-angular:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
